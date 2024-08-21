@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import LayoutProvider from "./components/layout-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { Analytics } from "@vercel/analytics/react";
 
 const fontSans = Roboto({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
             baseTheme: dark,
           }}
         >
+          <Analytics />
           <LayoutProvider>{children}</LayoutProvider>
         </ClerkProvider>
       </body>
