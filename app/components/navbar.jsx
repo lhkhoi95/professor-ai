@@ -7,6 +7,7 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 import { Menu, X } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Search } from 'lucide-react';
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,6 +41,11 @@ export default function NavBar() {
           </div>
           <SignedIn>
             <div className="hidden items-center gap-4 md:flex">
+              <input
+                type="text"
+                className="border pl-4 p-2 rounded-full lg:w-[400px]"
+                placeholder="Search..."
+              />
               <Link href="/submit-data">
                 <Button className="hidden rounded-full md:block">
                   Add Professor
@@ -63,6 +69,12 @@ export default function NavBar() {
               )}
             </div>
           </SignedIn>
+          <Link
+            href="/search"
+            className="block md:hidden p-2 mr-[-10px] rounded-lg"
+          >
+            <Search />
+          </Link>
           <Button
             className="block pr-0 sm:hidden"
             variant="ghost"
@@ -120,8 +132,21 @@ export function MobileActionButtons({ isMenuOpen, setIsMenuOpen }) {
           </Link>
         </SignedOut>
         <SignedIn>
+          <Link href="/submit-data" className="w-full">
+            <Button
+              variant="outline"
+              className="bg-yellow-400 border-yellow-400 block w-full md:hidden"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Add Professor
+            </Button>
+          </Link>
           <Link href="/chat" className="w-full">
-            <Button variant="outline" className="block w-full md:hidden">
+            <Button
+              variant="outline"
+              className="block w-full md:hidden"
+              onClick={() => setIsMenuOpen(false)}
+            >
               Chat
             </Button>
           </Link>
