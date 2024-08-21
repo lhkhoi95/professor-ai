@@ -22,8 +22,9 @@ client = OpenAI()
 
 # Create embeddings for each review and generate IDs
 for review in data:
+    text_to_embed = f"School: {review['school_name']}, Professor: {review['professor_name']}, Department: {review['department_name']}, Star Rating: {review['star_rating']}, Comments: {review['comments']}"
     response = client.embeddings.create(
-        input=review['comments'], model="text-embedding-3-small"
+        input=text_to_embed, model="text-embedding-3-small"
     )
     embedding = response.data[0].embedding
     processed_data.append(
@@ -35,6 +36,7 @@ for review in data:
                 "professor_name": review["professor_name"],
                 "department_name": review["department_name"],
                 "star_rating": review["star_rating"],
+                "comments": review["comments"],
             }
         }
     )

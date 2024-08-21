@@ -8,10 +8,9 @@ export default function LayoutProvider({ children }) {
   const pathname = usePathname();
   return (
     <ThemeProvider attribute="class" defaultTheme="system">
-      {/* {pathname !== "/sign-in" && pathname !== "/sign-up" && <NavBar />} */}
       <NavBar />
       {children}
-      <Footer />
+      {pathname !== "/chat" && <Footer />}
     </ThemeProvider>
   );
 }

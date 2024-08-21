@@ -5,9 +5,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Menu, X } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, isLoaded } = useUser();
 
   return (
     <div className="border-b">
@@ -40,13 +43,19 @@ export default function NavBar() {
               <Link href="/chat">
                 <Button className="hidden rounded-full md:block">Chat</Button>
               </Link>
-              <UserButton
-                appearance={{
-                  elements: {
-                    userButtonAvatarBox: "size-10",
-                  },
-                }}
-              />
+              {isLoaded ? (
+                <UserButton
+                  appearance={{
+                    elements: {
+                      userButtonAvatarBox: "size-10",
+                    },
+                  }}
+                />
+              ) : (
+                <Avatar>
+                  <AvatarFallback />
+                </Avatar>
+              )}
             </div>
           </SignedIn>
           <Button
