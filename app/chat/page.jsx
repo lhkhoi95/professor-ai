@@ -1,10 +1,10 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { marked } from "marked";
-import { useState, useRef, useEffect } from "react";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useUser } from "@clerk/nextjs";
-import Image from "next/image";
+'use client';
+import { Button } from '@/components/ui/button';
+import { marked } from 'marked';
+import { useState, useRef, useEffect } from 'react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { useUser } from '@clerk/nextjs';
+import Image from 'next/image';
 
 export default function ChatPage() {
   const messagesEndRef = useRef(null);
@@ -13,7 +13,7 @@ export default function ChatPage() {
 
   const [messages, setMessages] = useState([
     {
-      role: "assistant",
+      role: 'assistant',
       content: `Hi! I'm the Rate My Professor support assistant. I can help you find information about these schools:
 
 **University of Florida**
@@ -25,10 +25,10 @@ export default function ChatPage() {
   What would you like to know?`,
     },
   ]);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -36,29 +36,29 @@ export default function ChatPage() {
   }, [messages]);
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       sendMessage();
     }
   };
 
   const sendMessage = async () => {
-    setMessage("");
+    setMessage('');
     setMessages((messages) => [
       ...messages,
-      { role: "user", content: message },
-      { role: "assistant", content: "" },
+      { role: 'user', content: message },
+      { role: 'assistant', content: '' },
     ]);
 
-    const response = fetch("/api/chat", {
-      method: "POST",
+    const response = fetch('/api/chat', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify([...messages, { role: "user", content: message }]),
+      body: JSON.stringify([...messages, { role: 'user', content: message }]),
     }).then(async (res) => {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-      let result = "";
+      let result = '';
 
       return reader.read().then(function processText({ done, value }) {
         if (done) {
@@ -87,12 +87,12 @@ export default function ChatPage() {
           <div
             key={idx}
             className={`flex ${
-              msg.role === "user" ? "justify-end" : "justify-start"
+              msg.role === 'user' ? 'justify-end' : 'justify-start'
             }`}
           >
-            <div className="flex-start mb-4 mr-4 flex gap-4">
+            <div className="text-gray-200 flex-start mb-4 mr-4 flex gap-4">
               <Avatar>
-                {msg.role === "user" ? (
+                {msg.role === 'user' ? (
                   <Image
                     src={imageUrl}
                     alt="User Image"
@@ -126,9 +126,13 @@ export default function ChatPage() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="flex-grow rounded-md bg-[#2f2f2f] p-3 placeholder-gray-400 outline-none"
+          className="text-gray-200 flex-grow rounded-md bg-[#2f2f2f] p-3 placeholder-gray-400 outline-none"
         />
-        <Button aria-label="send message button" onClick={sendMessage}>
+        <Button
+          aria-label="send message button"
+          onClick={sendMessage}
+          className="py-6 px-6"
+        >
           Send
         </Button>
       </div>
