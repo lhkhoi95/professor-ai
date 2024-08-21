@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { ModeToggle } from "@/components/toggle-button";
-import Image from "next/image";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { Menu, X } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useState } from 'react';
+import { ModeToggle } from '@/components/toggle-button';
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { Menu, X } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,6 +40,11 @@ export default function NavBar() {
           </div>
           <SignedIn>
             <div className="hidden items-center gap-4 md:flex">
+              <Link href="/submit-data">
+                <Button className="hidden rounded-full md:block">
+                  Add Professor
+                </Button>
+              </Link>
               <Link href="/chat">
                 <Button className="hidden rounded-full md:block">Chat</Button>
               </Link>
@@ -47,7 +52,7 @@ export default function NavBar() {
                 <UserButton
                   appearance={{
                     elements: {
-                      userButtonAvatarBox: "size-10",
+                      userButtonAvatarBox: 'size-10',
                     },
                   }}
                 />
@@ -83,7 +88,7 @@ export function MobileActionButtons({ isMenuOpen, setIsMenuOpen }) {
   return (
     <div
       className={`fixed top-0 right-0 z-50 h-screen w-1/2 transform transition-transform duration-300 ease-in-out ${
-        isMenuOpen ? "translate-x-0" : "translate-x-full"
+        isMenuOpen ? 'translate-x-0' : 'translate-x-full'
       } bg-slate-700 sm:hidden`}
     >
       <div className="container mx-auto flex flex-col items-start gap-4 px-4 py-4">
