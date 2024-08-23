@@ -25,16 +25,20 @@ export default function NavBar() {
             className="rounded-full"
           />
 
-          <span className="ml-2 text-2xl font-bold">ProfessorAI</span>
+          <span className="ml-2 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-2xl font-bold text-transparent">
+            ProfessorAI
+          </span>
         </Link>
         <div className="flex items-center">
-          <div className="hidden items-center gap-4 sm:flex md:flex">
+          <div className="hidden items-center gap-2 sm:flex md:flex">
             <SignedOut>
               <Link href="/sign-in">
-                <Button variant="secondary">Login</Button>
+                <Button variant="secondary" className="rounded-full">
+                  Login
+                </Button>
               </Link>
               <Link href="/sign-up">
-                <Button>Register</Button>
+                <Button className="rounded-full">Register</Button>
               </Link>
             </SignedOut>
             {/* <ModeToggle /> */}
@@ -47,7 +51,12 @@ export default function NavBar() {
                 placeholder="Search..."
               />
               <Link href="/submit-data">
-                <Button className="hidden rounded-full md:block">Review</Button>
+                <Button
+                  variant="secondary"
+                  className="hidden rounded-full md:block"
+                >
+                  Review
+                </Button>
               </Link>
               <Link href="/chat">
                 <Button className="hidden rounded-full md:block">Chat</Button>
@@ -66,13 +75,13 @@ export default function NavBar() {
                 </Avatar>
               )}
             </div>
+            <Link
+              href="/search"
+              className="mr-[-10px] block rounded-lg p-2 md:hidden"
+            >
+              <Search />
+            </Link>
           </SignedIn>
-          <Link
-            href="/search"
-            className="mr-[-10px] block rounded-lg p-2 md:hidden"
-          >
-            <Search />
-          </Link>
           <Button
             className="block pr-0 sm:hidden"
             variant="ghost"
@@ -133,7 +142,7 @@ export function MobileActionButtons({ isMenuOpen, setIsMenuOpen }) {
           <Link href="/submit-data" className="w-full">
             <Button
               variant="outline"
-              className="block w-full border-yellow-400 bg-yellow-400 md:hidden"
+              className="block w-full border-yellow-400 bg-yellow-400 text-black md:hidden"
               onClick={() => setIsMenuOpen(false)}
             >
               Review

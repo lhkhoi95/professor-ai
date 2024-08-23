@@ -6,11 +6,13 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 export default function LayoutProvider({ children }) {
   const pathname = usePathname();
+  const shouldShowFooter = pathname !== "/chat" && pathname !== "/submit-data";
+
   return (
     <ThemeProvider attribute="class" defaultTheme="system">
       <NavBar />
       {children}
-      {pathname !== "/chat" && <Footer />}
+      {shouldShowFooter && <Footer />}
     </ThemeProvider>
   );
 }

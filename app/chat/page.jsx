@@ -1,10 +1,10 @@
-'use client';
-import { Button } from '@/components/ui/button';
-import { marked } from 'marked';
-import { useState, useRef, useEffect } from 'react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { useUser } from '@clerk/nextjs';
-import Image from 'next/image';
+"use client";
+import { Button } from "@/components/ui/button";
+import { marked } from "marked";
+import { useState, useRef, useEffect } from "react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useUser } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function ChatPage() {
   const messagesEndRef = useRef(null);
@@ -13,7 +13,7 @@ export default function ChatPage() {
 
   const [messages, setMessages] = useState([
     {
-      role: 'assistant',
+      role: "assistant",
       content: `Hi! I'm the Rate My Professor support assistant. I can help you find information about these schools:
 
 **University of Florida**
@@ -25,10 +25,11 @@ export default function ChatPage() {
   What would you like to know?`,
     },
   ]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
+  const [isStreaming, setIsStreaming] = useState(false); // State to track if streaming
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -36,32 +37,34 @@ export default function ChatPage() {
   }, [messages]);
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter" && !isStreaming) {
       sendMessage();
     }
   };
 
   const sendMessage = async () => {
-    setMessage('');
+    setMessage("");
     setMessages((messages) => [
       ...messages,
-      { role: 'user', content: message },
-      { role: 'assistant', content: '' },
+      { role: "user", content: message },
+      { role: "assistant", content: "" },
     ]);
+    setIsStreaming(true); // Start streaming
 
-    const response = fetch('/api/chat', {
-      method: 'POST',
+    const response = fetch("/api/chat", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify([...messages, { role: 'user', content: message }]),
+      body: JSON.stringify([...messages, { role: "user", content: message }]),
     }).then(async (res) => {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-      let result = '';
+      let result = "";
 
       return reader.read().then(function processText({ done, value }) {
         if (done) {
+          setIsStreaming(false); // End streaming
           return result;
         }
         const text = decoder.decode(value || new Uint8Array(), {
@@ -81,18 +84,18 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="mx-auto flex h-[90vh] max-w-3xl flex-col p-4">
-      <div className="flex flex-grow flex-col gap-2 overflow-auto">
+    <div className="mx-auto flex h-screen max-w-3xl flex-col p-4">
+      <div className="flex flex-grow flex-col gap-2">
         {messages.map((msg, idx) => (
           <div
             key={idx}
             className={`flex ${
-              msg.role === 'user' ? 'justify-end' : 'justify-start'
+              msg.role === "user" ? "justify-end" : "justify-start"
             }`}
           >
-            <div className="text-gray-200 flex-start mb-4 mr-4 flex gap-4">
+            <div className="flex-start mb-4 mr-4 flex gap-4 text-gray-200">
               <Avatar>
-                {msg.role === 'user' ? (
+                {msg.role === "user" ? (
                   <Image
                     src={imageUrl}
                     alt="User Image"
@@ -118,7 +121,7 @@ export default function ChatPage() {
         ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className="sticky bottom-0 flex items-center gap-2">
+      <div className="sticky bottom-0 flex items-center gap-2 pb-2">
         <input
           aria-label="message input box"
           placeholder="Type message here..."
@@ -126,12 +129,13 @@ export default function ChatPage() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="text-gray-200 flex-grow rounded-md bg-[#2f2f2f] p-3 placeholder-gray-400 outline-none"
+          className="flex-grow rounded-md bg-[#2f2f2f] p-3 text-gray-200 placeholder-gray-400 outline-none"
         />
         <Button
           aria-label="send message button"
           onClick={sendMessage}
-          className="py-6 px-6"
+          className="px-6 py-3"
+          disabled={isStreaming} // Disable the button if streaming
         >
           Send
         </Button>

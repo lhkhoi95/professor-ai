@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -8,9 +8,8 @@ export default function Footer() {
         <div className="grid gap-6">
           <div className="grid gap-6">
             <Link href="/">
-              {/* Replace logo */}
               <Image
-                src={'/images/logojpg.jpg'}
+                src={"/images/logojpg.jpg"}
                 alt="Logo"
                 width={100}
                 height={100}
@@ -57,6 +56,7 @@ export default function Footer() {
                 Angel Martinez
               </a>
             </p>
+            <p>@ 2024. All rights reserved.</p>
           </div>
         </div>
       </div>

@@ -18,29 +18,31 @@ export default function ProfessorReviewDialog({
   const cons = professorData.analysis.cons;
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="h-screen max-w-3xl overflow-auto md:h-[95vh]">
-        <DialogHeader>
-          <DialogTitle className="text-center text-3xl font-bold">
-            {professorData.name}
-          </DialogTitle>
-          <DialogDescription className="text-center">
-            Here is the summary of the professor
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex flex-col gap-4">
-          {detailBlock("Department", professorData.department)}
-          {detailBlock("School", professorData.school)}
-          {detailBlock(
-            "Difficulty Level",
-            professorData.difficultyLevel + " / 5"
-          )}
-          {detailBlock("Would Take Again", professorData.wouldTakeAgain)}
-        </div>
-        {analysisBlock(summary, pros, cons)}
-        <DialogFooter>
-          <Button onClick={() => onOpenChange(false)}>Got It!</Button>
-        </DialogFooter>
-      </DialogContent>
+      <div className="flex items-center">
+        <DialogContent className="h-[95%] max-w-3xl overflow-auto">
+          <DialogHeader>
+            <DialogTitle className="text-center text-3xl font-bold">
+              {professorData.name}
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              Here is the summary of the professor
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4">
+            {detailBlock("Department", professorData.department)}
+            {detailBlock("School", professorData.school)}
+            {detailBlock(
+              "Difficulty Level",
+              professorData.difficultyLevel + " / 5"
+            )}
+            {detailBlock("Would Take Again", professorData.wouldTakeAgain)}
+          </div>
+          {analysisBlock(summary, pros, cons)}
+          <DialogFooter>
+            <Button onClick={() => onOpenChange(false)}>Got It!</Button>
+          </DialogFooter>
+        </DialogContent>
+      </div>
     </Dialog>
   );
 }
