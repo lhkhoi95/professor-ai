@@ -21,17 +21,19 @@ export default function ProfessorReviewDialog({
       <DialogContent className="h-screen max-w-3xl overflow-auto md:h-[95vh]">
         <DialogHeader>
           <DialogTitle className="text-center text-3xl font-bold">
-            Professor Review
+            {professorData.name}
           </DialogTitle>
           <DialogDescription className="text-center">
             Here is the summary of the professor
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-4">
-          {detailBlock("Name", professorData.name)}
           {detailBlock("Department", professorData.department)}
           {detailBlock("School", professorData.school)}
-          {detailBlock("Difficulty Level", professorData.difficultyLevel)}
+          {detailBlock(
+            "Difficulty Level",
+            professorData.difficultyLevel + " / 5"
+          )}
           {detailBlock("Would Take Again", professorData.wouldTakeAgain)}
         </div>
         {analysisBlock(summary, pros, cons)}

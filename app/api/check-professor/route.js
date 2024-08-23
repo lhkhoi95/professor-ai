@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import puppeteer from "puppeteer";
+import * as cheerio from "cheerio";
 
 const openai = new OpenAI();
 
@@ -23,104 +23,66 @@ export async function POST(req) {
 }
 
 async function scraper(target_url) {
-  let browser;
   try {
-    // Setup
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-dev-shm-usage"],
-    });
+    // Fetch the HTML content
+    const response = await fetch(target_url);
+    const html = await response.text(); // Get the HTML content as a string
 
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1920, height: 1080 });
+    const $ = cheerio.load(html);
 
-    // Go to the website
-    await page.goto(target_url, {
-      waitUntil: "networkidle0",
-    });
+    // Extract professor data
+    const professorData = {
+      professorName: "",
+      department: "",
+      school: "",
+      wouldTakeAgain: "",
+      difficultyLevel: "",
+      comments: "",
+    };
 
-    // Handle cookie agreement panel
-    try {
-      console.log("Checking for cookie agreement panel...");
-      await page.waitForSelector(
-        "button.CCPAModal__StyledCloseButton-sc-10x9kq-2",
-        { timeout: 5000 }
-      );
-      console.log("Cookie agreement panel found. Closing it...");
-      await page.click("button.CCPAModal__StyledCloseButton-sc-10x9kq-2");
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    } catch (error) {
-      console.log("No cookie agreement panel found or unable to close it.");
-      throw new Error("Unable to close cookie agreement panel.");
-    }
+    const firstName = $(".NameTitle__Name-dowf0z-0 span").first().text().trim();
+    const lastName = $(".NameTitle__LastNameWrapper-dowf0z-2").text().trim();
+    professorData.professorName = `${firstName} ${lastName}`;
 
-    const professorData = await page.evaluate(() => {
-      // Extracting professor name
-      const firstNameElement = document.querySelector(
-        ".NameTitle__Name-dowf0z-0 span"
-      );
-      const lastNameElement = document.querySelector(
-        ".NameTitle__LastNameWrapper-dowf0z-2"
-      );
-      const professorName =
-        firstNameElement && lastNameElement
-          ? `${firstNameElement.textContent.trim()} ${lastNameElement.textContent.trim()}`
-          : "";
+    // Department
+    professorData.department = $(
+      ".TeacherDepartment__StyledDepartmentLink-fl79e8-0 b"
+    )
+      .text()
+      .trim()
+      .replace(/department/i, "");
 
-      // Extracting department
-      const departmentElement = document.querySelector(
-        ".TeacherDepartment__StyledDepartmentLink-fl79e8-0 b"
-      );
-      const department = departmentElement
-        ? departmentElement.textContent.trim()
+    // School name
+    professorData.school = $('.NameTitle__Title-dowf0z-1 > a[href^="/school/"]')
+      .text()
+      .trim();
+
+    // "Would Take Again" percentage
+    const wouldTakeAgainElements = $(
+      ".FeedbackItem__StyledFeedbackItem-uof32n-0 .FeedbackItem__FeedbackNumber-uof32n-1"
+    );
+    professorData.wouldTakeAgain =
+      wouldTakeAgainElements.length > 0
+        ? wouldTakeAgainElements.first().text().trim()
         : "";
 
-      // Extracting school name
-      const schoolElement = document.querySelector(
-        '.NameTitle__Title-dowf0z-1 > a[href^="/school/"]'
-      );
-      const school = schoolElement ? schoolElement.textContent.trim() : "";
-
-      // Extracting % of "Would take again"
-      const wouldTakeAgainElement = document.querySelectorAll(
-        ".FeedbackItem__StyledFeedbackItem-uof32n-0 .FeedbackItem__FeedbackNumber-uof32n-1"
-      )[0];
-      const wouldTakeAgain = wouldTakeAgainElement
-        ? wouldTakeAgainElement.textContent.trim()
+    // "Level of Difficulty"
+    professorData.difficultyLevel =
+      wouldTakeAgainElements.length > 1
+        ? wouldTakeAgainElements.eq(1).text().trim()
         : "";
 
-      // Extracting "Level of Difficulty"
-      const difficultyLevelElement = document.querySelectorAll(
-        ".FeedbackItem__StyledFeedbackItem-uof32n-0 .FeedbackItem__FeedbackNumber-uof32n-1"
-      )[1];
-      const difficultyLevel = difficultyLevelElement
-        ? difficultyLevelElement.textContent.trim()
-        : "";
-
-      // Extracting comments and combining them into a string
-      const commentElements = document.querySelectorAll(
-        ".Comments__StyledComments-dzzyvm-0"
-      );
-      const comments = Array.from(commentElements)
-        .map((comment) => comment.textContent.trim())
-        .join(" ");
-
-      return {
-        professorName,
-        department,
-        school,
-        wouldTakeAgain,
-        difficultyLevel,
-        comments,
-      };
-    });
+    // Comments
+    const comments = $(".Comments__StyledComments-dzzyvm-0")
+      .map((_, element) => $(element).text().trim())
+      .get()
+      .join(" ");
+    professorData.comments = comments;
 
     return professorData;
   } catch (error) {
     console.error("Error scraping:", error);
     throw new Error("Error scraping.");
-  } finally {
-    await browser.close();
   }
 }
 
