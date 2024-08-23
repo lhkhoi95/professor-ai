@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { ModeToggle } from '@/components/toggle-button';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-import { Menu, X } from 'lucide-react';
-import { useUser } from '@clerk/nextjs';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Search } from 'lucide-react';
+import { useState } from "react";
+import { ModeToggle } from "@/components/toggle-button";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Menu, X } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Search } from "lucide-react";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,13 +43,11 @@ export default function NavBar() {
             <div className="hidden items-center gap-4 md:flex">
               <input
                 type="text"
-                className="border pl-4 p-2 rounded-full lg:w-[400px]"
+                className="rounded-full border p-2 pl-4 lg:w-[400px]"
                 placeholder="Search..."
               />
               <Link href="/submit-data">
-                <Button className="hidden rounded-full md:block">
-                  Add Professor
-                </Button>
+                <Button className="hidden rounded-full md:block">Review</Button>
               </Link>
               <Link href="/chat">
                 <Button className="hidden rounded-full md:block">Chat</Button>
@@ -58,7 +56,7 @@ export default function NavBar() {
                 <UserButton
                   appearance={{
                     elements: {
-                      userButtonAvatarBox: 'size-10',
+                      userButtonAvatarBox: "size-10",
                     },
                   }}
                 />
@@ -71,7 +69,7 @@ export default function NavBar() {
           </SignedIn>
           <Link
             href="/search"
-            className="block md:hidden p-2 mr-[-10px] rounded-lg"
+            className="mr-[-10px] block rounded-lg p-2 md:hidden"
           >
             <Search />
           </Link>
@@ -100,7 +98,7 @@ export function MobileActionButtons({ isMenuOpen, setIsMenuOpen }) {
   return (
     <div
       className={`fixed top-0 right-0 z-50 h-screen w-1/2 transform transition-transform duration-300 ease-in-out ${
-        isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        isMenuOpen ? "translate-x-0" : "translate-x-full"
       } bg-slate-700 sm:hidden`}
     >
       <div className="container mx-auto flex flex-col items-start gap-4 px-4 py-4">
@@ -135,10 +133,10 @@ export function MobileActionButtons({ isMenuOpen, setIsMenuOpen }) {
           <Link href="/submit-data" className="w-full">
             <Button
               variant="outline"
-              className="bg-yellow-400 border-yellow-400 block w-full md:hidden"
+              className="block w-full border-yellow-400 bg-yellow-400 md:hidden"
               onClick={() => setIsMenuOpen(false)}
             >
-              Add Professor
+              Review
             </Button>
           </Link>
           <Link href="/chat" className="w-full">
