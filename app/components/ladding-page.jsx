@@ -15,7 +15,7 @@ export default function LandingPage() {
           power of AI.
         </p>
         <Link href="/chat">
-          <Button className="mt-8 transform rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-3 text-white transition-transform hover:scale-105 hover:from-yellow-600 hover:to-orange-600">
+          <Button className="mt-8 transform rounded-full bg-gradient-to-r from-yellow-500 to-orange-500 px-8 py-3 text-lg text-slate-100 transition-transform hover:scale-105 hover:from-yellow-600 hover:to-orange-600">
             Get Started
           </Button>
         </Link>

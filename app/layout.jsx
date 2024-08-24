@@ -1,14 +1,14 @@
 import "./globals.css";
-import { Roboto } from "next/font/google";
+import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import LayoutProvider from "./components/layout-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/react";
 
-const fontSans = Roboto({
+const fontSans = Poppins({
   subsets: ["latin"],
-  weight: ["300", "400", "700"],
+  weight: ["500"],
   variable: "--font-sans",
 });
 
@@ -20,12 +20,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
+      <body className={cn("font-sans", fontSans.variable)}>
         <ClerkProvider
           appearance={{
             baseTheme: dark,
