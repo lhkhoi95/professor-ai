@@ -31,6 +31,7 @@ export const columns = [
   },
   {
     accessorKey: "name",
+    header: "Name",
   },
   {
     accessorKey: "department",
