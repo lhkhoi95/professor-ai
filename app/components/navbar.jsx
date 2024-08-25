@@ -7,7 +7,6 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Menu, X } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Search } from "lucide-react";
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -80,7 +79,7 @@ export default function NavBar() {
             </div>
           </SignedIn>
           <Button
-            className="block pr-0 sm:hidden"
+            className="block p-0 sm:hidden"
             variant="ghost"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -136,6 +135,9 @@ export function MobileActionButtons({ isMenuOpen, setIsMenuOpen }) {
           </Link>
         </SignedOut>
         <SignedIn>
+          <div className="w-full text-center">
+            <UserButton appearance={{ elements: { avatarBox: "size-10" } }} />
+          </div>
           <Link href="/chat" className="w-full">
             <Button
               variant="outline"
