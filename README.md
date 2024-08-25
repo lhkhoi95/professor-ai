@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Demo
+![Screenshot 2024-08-25 130147](https://github.com/user-attachments/assets/1cf65ec6-d4ad-43cc-a9ce-2c84fa83b218)
+
+Demo video: https://youtu.be/a98rFPJ-9Wo </br>
+Live Demo: https://professor-ai-hs.vercel.app/
 
 ## Getting Started
 
