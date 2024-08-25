@@ -12,10 +12,8 @@ import {
 } from "@/components/ui/sheet";
 import { Building2, Repeat, School, Scroll, Star } from "lucide-react";
 import { analysisBlock } from "../submit-data/components/professor-review-dialog";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 export default function ProfessorDetails({ professor, children }) {
-  console.log(professor);
   const pros = convertToArray(professor.pros);
   const cons = convertToArray(professor.cons);
 
