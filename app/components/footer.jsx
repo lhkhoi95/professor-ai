@@ -7,14 +7,18 @@ export default function Footer() {
       <div className="container py-24">
         <div className="grid gap-6">
           <div className="grid gap-6">
-            <Link href="/">
+            <Link href="/" className="flex items-center">
               <Image
                 src={"/images/logojpg.jpg"}
                 alt="Logo"
                 width={100}
                 height={100}
                 className="rounded-full hover:brightness-125"
-              ></Image>
+              />
+
+              <span className="ml-2 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-2xl font-bold text-transparent">
+                ProfessorAI
+              </span>
             </Link>
           </div>
           <div className="flex flex-col gap-3 text-sm text-muted-foreground md:flex-row">

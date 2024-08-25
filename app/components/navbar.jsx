@@ -45,17 +45,20 @@ export default function NavBar() {
           </div>
           <SignedIn>
             <div className="hidden items-center gap-4 md:flex">
-              <input
-                type="text"
-                className="rounded-full border p-2 pl-4 lg:w-[400px]"
-                placeholder="Search..."
-              />
               <Link href="/submit-data">
                 <Button
                   variant="secondary"
                   className="hidden rounded-full md:block"
                 >
                   Review
+                </Button>
+              </Link>
+              <Link href="/bookmarks">
+                <Button
+                  variant="secondary"
+                  className="hidden rounded-full md:block"
+                >
+                  Bookmarks
                 </Button>
               </Link>
               <Link href="/chat">
@@ -75,12 +78,6 @@ export default function NavBar() {
                 </Avatar>
               )}
             </div>
-            <Link
-              href="/search"
-              className="mr-[-10px] block rounded-lg p-2 md:hidden"
-            >
-              <Search />
-            </Link>
           </SignedIn>
           <Button
             className="block pr-0 sm:hidden"
@@ -139,22 +136,31 @@ export function MobileActionButtons({ isMenuOpen, setIsMenuOpen }) {
           </Link>
         </SignedOut>
         <SignedIn>
-          <Link href="/submit-data" className="w-full">
+          <Link href="/chat" className="w-full">
             <Button
               variant="outline"
-              className="block w-full border-yellow-400 bg-yellow-400 text-black md:hidden"
+              className="block w-full border border-none bg-yellow-500 md:hidden"
               onClick={() => setIsMenuOpen(false)}
             >
-              Review
+              Chat
             </Button>
           </Link>
-          <Link href="/chat" className="w-full">
+          <Link href="/submit-data" className="w-full">
             <Button
               variant="outline"
               className="block w-full md:hidden"
               onClick={() => setIsMenuOpen(false)}
             >
-              Chat
+              Review
+            </Button>
+          </Link>
+          <Link href="/bookmarks" className="w-full">
+            <Button
+              variant="outline"
+              className="block w-full md:hidden"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Bookmarks
             </Button>
           </Link>
         </SignedIn>

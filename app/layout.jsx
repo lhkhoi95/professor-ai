@@ -5,6 +5,7 @@ import LayoutProvider from "./components/layout-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "@/components/ui/toaster";
 
 const fontSans = Poppins({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
         >
           <Analytics />
           <LayoutProvider>{children}</LayoutProvider>
+          <Toaster />
         </ClerkProvider>
       </body>
     </html>

@@ -7,10 +7,12 @@ const openai = new OpenAI();
 export async function POST(req) {
   const data = await req.json();
   const target_url = data.link;
+  const professorID = target_url.split("/").pop();
 
   const professorData = await scraper(target_url);
   const analysis = await getRecommendation(professorData);
   const response = {
+    id: professorID,
     name: professorData.professorName,
     department: professorData.department,
     school: professorData.school,
@@ -49,8 +51,8 @@ async function scraper(target_url) {
       ".TeacherDepartment__StyledDepartmentLink-fl79e8-0 b"
     )
       .text()
-      .trim()
-      .replace(/department/i, "");
+      .replace(/department/i, "")
+      .trim();
 
     // School name
     professorData.school = $('.NameTitle__Title-dowf0z-1 > a[href^="/school/"]')

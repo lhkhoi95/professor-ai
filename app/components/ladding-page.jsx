@@ -29,25 +29,23 @@ export default function LandingPage() {
               Instant Feedback
             </h3>
             <p className="text-base leading-relaxed">
-              Get immediate professor ratings and reviews from our extensive
-              database.
+              Get immediate professor ratings and reviews by our chatbot.
             </p>
           </div>
           <div className="group transform rounded-lg bg-secondary p-8 text-secondary-foreground shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
             <h3 className="mb-3 text-2xl font-bold transition-colors group-hover:text-yellow-400">
-              Submit Your Rating
+              Chatbot Support
             </h3>
             <p className="text-base leading-relaxed">
-              Rate and review professors easily through our chatbot’s intuitive
-              interface.
+              Get suggestions and recommendations from our chatbot.
             </p>
           </div>
           <div className="group transform rounded-lg bg-secondary p-8 text-secondary-foreground shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
             <h3 className="mb-3 text-2xl font-bold transition-colors group-hover:text-yellow-400">
-              Anonymous Feedback
+              Bookmarks and Filters
             </h3>
             <p className="text-base leading-relaxed">
-              Provide feedback anonymously to ensure your privacy and honesty.
+              Save and filter your favorite professors.
             </p>
           </div>
         </div>
