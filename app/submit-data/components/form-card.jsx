@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import useHttp from "@/hooks/useHttp";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import useHttp from '@/hooks/useHttp';
 import {
   Form,
   FormControl,
@@ -13,11 +13,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
-import { Loader2 } from "lucide-react";
-import ProfessorReviewDialog from "./professor-review-dialog";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useEffect, useState } from 'react';
+import { Loader2 } from 'lucide-react';
+import ProfessorReviewDialog from './professor-review-dialog';
 
 const FormSchema = z.object({
   link: z.string().refine(
@@ -29,15 +29,15 @@ const FormSchema = z.object({
     },
     {
       message:
-        "The link must be a valid RateMyProfessor link in the format https://www.ratemyprofessors.com/professor/<id>",
+        'The link must be a valid RateMyProfessor link in the format https://www.ratemyprofessors.com/professor/<id>',
     }
   ),
 });
 
 const requestConfig = {
-  method: "POST",
+  method: 'POST',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 };
 
@@ -46,7 +46,7 @@ export default function FormCard() {
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      link: "",
+      link: '',
     },
   });
 
@@ -55,7 +55,7 @@ export default function FormCard() {
     error,
     data: summaryData,
     sendRequest,
-  } = useHttp("/api/check-professor", requestConfig);
+  } = useHttp('/api/check-professor', requestConfig);
 
   const onSubmit = (data) => {
     // console.log(data);
@@ -81,7 +81,7 @@ export default function FormCard() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="mt-4 w-full space-y-6 rounded-xl bg-[#2f2f2f] p-6 md:w-1/3"
+          className="mt-4 w-full space-y-6 rounded-xl bg-[#F5F5F4] dark:bg-[#2f2f2f] p-6 md:w-1/3"
         >
           <h1 className="text-center text-2xl font-bold">
             Link to the professor
@@ -92,7 +92,7 @@ export default function FormCard() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel
-                  className={form.formState.errors.link ? "text-red-500" : ""}
+                  className={form.formState.errors.link ? 'text-red-500' : ''}
                 >
                   Professor Link
                 </FormLabel>
@@ -103,14 +103,14 @@ export default function FormCard() {
                   />
                 </FormControl>
                 <FormDescription>
-                  Link to the professor on{" "}
+                  Link to the professor on{' '}
                   <a
                     target="_blank"
                     className="underline hover:text-yellow-500"
                     href="https://www.ratemyprofessors.com/"
                   >
                     RateMyProfessor
-                  </a>{" "}
+                  </a>{' '}
                   website.
                 </FormDescription>
                 <FormMessage className="text-red-500" />
@@ -126,7 +126,7 @@ export default function FormCard() {
                   <span>Checking... </span>
                 </>
               ) : (
-                "Get Review"
+                'Get Review'
               )}
             </Button>
           </div>

@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import React from "react";
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import React from 'react';
 
 export default function LandingPage() {
   return (
-    <div className="dark min-h-screen bg-background text-foreground">
+    <div className="dark:dark min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="mb-16 mt-16 flex flex-col items-center justify-center bg-card py-20 text-center text-card-foreground">
         <h1 className="animate-fade-in bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-600 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent">
